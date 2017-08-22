@@ -1,0 +1,45 @@
+server.error.whitelabel.enabled: false
+spring:
+  autoconfigure:
+    exclude: org.springframework.boot.autoconfigure.web.ErrorMvcAutoConfiguration
+  redis:
+    host: localhost
+    #password: test
+    port: 6379
+  session:
+    store-type: redis
+    redis:
+      namespace: gateway_
+
+kcmt:
+  enabled: true
+  realm-configuration-class: kcmtgateway.config.ConfigurationDrivenSecurityPropertyResolver
+  root-redirect: /any
+  services:
+    anyone:
+      src: /any
+      dst: http://google.com
+    masterOnly:
+      src: /master
+      dst: http://google.com
+      require-issuer: https://auth.digabit.com/auth/realms/master
+    roleRequired:
+      src: /role
+      dst: http://google.com
+      require-role:
+        - ROLE_USER
+  realms:
+    base-url: https://auth.localdomain/auth
+    providers:
+      - hostname: localhost
+        realm: master
+        client-id: test
+        client-secret: <secret>
+      - hostname: local1
+        realm: test1
+        client-id: test
+        client-secret: <secret>
+      - hostname: local2
+        realm: test2
+        client-id: test
+        client-secret: <secret>

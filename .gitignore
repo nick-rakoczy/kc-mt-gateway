@@ -1,0 +1,7 @@
+.idea/dictionaries
+.idea/libraries
+.idea/tasks.xml
+.idea/workspace.xml
+
+# Ignored for having security realm configuration in it.
+src/main/resources/application.yml
